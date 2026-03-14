@@ -63,7 +63,7 @@ export async function decryptSources_v1(epID, id, name, type, fallback) {
     let ajaxLink = null;
 
     if (fallback) {
-      const fallback_server = ["hd-1", "hd-3"].includes(name.toLowerCase())
+     const fallback_server = ["megacloud", "t-cloud"].includes(name.toLowerCase())
         ? fallback_1
         : fallback_2;
 
@@ -77,9 +77,9 @@ export async function decryptSources_v1(epID, id, name, type, fallback) {
           },
         },
       );
-
       const $ = cheerio.load(data);
-      const dataId = $("#megaplay-player").attr("data-id");
+       const player = $("#megaplay-player");
+      const dataId = player.attr("data-id") || player.attr("data-ep-id");
       const { data: decryptedData } = await axios.get(
         `https://${fallback_server}/stream/getSources?id=${dataId}`,
         {
