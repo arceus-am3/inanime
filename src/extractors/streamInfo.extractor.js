@@ -51,7 +51,14 @@ export async function extractServers(id) {
 async function extractStreamingInfo(id, name, type, fallback) {
   try {
     const servers = await extractServers(id.split("?ep=").pop());
-
+ if (name.toLowerCase() === "hd-1") {
+  name = "megacloud";
+} else if (name.toLowerCase() === "hd-2") {
+  name = "vidsrc";
+} else if (name.toLowerCase() === "hd-3") {
+  name = "t-cloud";
+}
+    console.log(servers,name)
     // 1. Try exact match
     let requestedServer = servers.filter(
       (server) =>
