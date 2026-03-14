@@ -1,0 +1,1118 @@
+﻿<div align="center">
+
+![Static Badge](https://img.shields.io/badge/node.js-grey?logo=nodedotjs) ![GitHub stars](https://img.shields.io/github/stars/arceus-am3/inanime?logo=github)
+![GitHub forks](https://img.shields.io/github/forks/arceus-am3/inanime?logo=github)
+![Static Badge](https://img.shields.io/badge/version-1.0.0-blue)
+
+</div>
+
+## <span>Disclaimer</span>
+
+1.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
+
+2.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
+
+<p align="center">
+      <img
+        src="./public/anya.gif"
+        width="200"
+        height="200"
+      />
+    </p>
+
+# <p align="center">HiAnime API</p>
+
+>
+
+<p align="center">RestFul API made with Node.js <br/>(Checkout this anime streaming website  <a href="https://justanime.fun" target="_blank">JustAnime</a> powered by this API)</p>
+
+> <h2> Table of Contents </h2>
+
+- [Installation](#installation)
+  - [Local installation](#local-installation)
+- [Deployment](#deployment)
+  - [Vercel](#Vercel)
+  - [Render](#Render)
+- [Documentation](#documentation)
+  - [GET Home Info](#get-home-info)
+  - [GET Top Search](#get-top-search)
+  - [GET Specified Anime's Info](#get-specified-animes-info)
+  - [GET Random Anime's Info](#get-random-animes-info)
+  - [GET Categories Info](#get-categories-info)
+  - [GET Search Result's Info](#get-search-results-info)
+  - [GET Search Suggestions](#get-search-suggestions)
+  - [GET Anime Schedule](#get-schedule-of-upcoming-anime)
+  - [GET Anime's Next Epiosde's Schedule](#get-schedule-of-next-episode-of-anime)
+  - [GET Anime Stream Info](#get-streaming-info)
+  - [GET Anime Backup Stream Info](#get-fallback-streaming-info)
+  - [GET Anime Episodes](#get-animes-episode-list)
+  - [GET Anime Episode's Available Servers](#get-available-servers-of-anime)
+- [Pull Requests](#pull-requests)
+- [Reporting Issues](#reporting-issues)
+- [Support](#support)
+
+> # Installation
+
+## Local installation
+
+Make sure you have node installed on your device
+
+1. Run the following code to clone the repository and install all required dependencies
+
+```bash
+$ git clone https://github.com/arceus-am3/inanime.git
+$ cd anime-api
+$ npm install
+```
+
+2. Refer the [.env.example](https://github.com/arceus-am3/inanime/blob/main/.env.example) file to setup `.env` file
+
+```bash
+# Origins you want to allow
+
+ALLOWED_ORIGIN=<https://site1.com>,<https://site2.com>,...
+```
+
+3. Start the server
+
+```bash
+$ npm start #or npm run devStart
+```
+
+> # Deployment
+
+### Vercel
+
+Host your own instance of anime-api on vercel
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/arceus-am3/inanime)
+
+### Render
+
+Host your own instance of anime-api on Render.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/arceus-am3/inanime)
+
+> # Documentation
+
+### `GET` Home info
+
+```bash
+  GET /api/
+```
+
+### Endpoint
+
+```bash
+  /api/
+```
+
+> #### No parameter required âŒ
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "spotlights": [
+      {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": string,
+          "duration": string,
+          "releaseDate": string,
+          "quality": string,
+          "episodeInfo": [object]
+        }
+      },
+      {...}
+    ],
+    "trending": [
+      {
+        "id":string,
+        "data_id": number,
+        "number": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+      }
+      {...}
+    ],
+    "today":[
+      "schedule":[
+        {
+          "id":string,
+          "data_id":number,
+          "title":string,
+          "japanese_title":string,
+          "releaseDate":string,
+          "time":string,
+          "episode_no":number,
+        },{...}
+      ]
+    ],
+    "topAiring":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "mostPopular":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      },
+    "mostFavorite":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "latestCompleted":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "latestEpisode":[
+      {
+        "id":string,
+        "data_id":number,
+        "poster":string,
+        "title":string,
+        "japanese_title":string,
+        "description":string,
+        tvInfo:[object]
+      }
+    ],
+    "genres":[
+      string,
+      string,
+      string,
+      ...
+    ]
+  }
+}
+```
+
+### `GET` Top Search
+
+```bash
+  GET /api/top-search
+```
+
+> #### No parameter required âŒ
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/top-search");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "title": string,
+      "link": string
+    },
+    {...}
+  ]
+}
+```
+
+### `GET` Specified anime's info
+
+```bash
+  GET /api/info
+```
+
+### Endpoint
+
+```bash
+  /api/info?id={string}
+```
+
+#### Parameters
+
+| Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+|   `id`    |    `query`     |  string   |  anime-id   |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/info?id=yami-shibai-9-17879");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "data": {
+      "adultContent":boolean,
+      "id":string,
+      "data_id": number,
+      "title": string,
+      "japanese_title": string,
+      "poster": string,
+      "showType":string,
+      "animeInfo": {
+        "Overview": string,
+        "Japanese": string,
+        "Synonyms": string,
+        "Aired": string,
+        "Premiered": string,
+        "Duration": string,
+        "Status": string,
+        "MAL Score": string,
+        "Genres": [Object],
+        "Studios": string,
+        "Producers": [Object]
+      }
+    },
+    "seasons": [
+      {
+        "id":string,
+        "data_number": number,
+        "data_id": number,
+        "season": string,
+        "title": string,
+        "japanese_title": string,
+        "season_poster": string
+      },
+      {...}
+    ],
+
+  }
+}
+```
+
+### `GET` Random anime's info
+
+```bash
+  GET /api/random
+```
+
+### Endpoint
+
+```bash
+  /api/random
+```
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/random");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "data": {
+      "adultContent":boolean,
+      "id":string,
+      "data_id": number,
+      "title": string,
+      "japanese_title": string,
+      "poster": string,
+      "showType":string,
+      "animeInfo": {
+        "Overview": string,
+        "Japanese": string,
+        "Synonyms": string,
+        "Aired": string,
+        "Premiered": string,
+        "Duration": string,
+        "Status": string,
+        "MAL Score": string,
+        "Genres": [Object],
+        "Studios": string,
+        "Producers": [Object]
+      }
+    },
+    "related_data":[
+      [
+       {
+          "duration": "string",
+          "data_id": "number",
+          "id": "string",
+          "title": "string",
+          "japanese_title": "string",
+          "poster": "string",
+          "tvInfo": {
+              "dub": "number",
+              "sub": "number",
+              "showType": "string",
+              "eps": "number"
+            }
+        },{...}
+      ]
+    ],
+    "recommended_data":[
+      [
+       {
+          "duration": "string",
+          "data_id": "number",
+          "id": "string",
+          "title": "string",
+          "japanese_title": "string",
+          "poster": "string",
+          "tvInfo": {
+              "dub": "number",
+              "sub": "number",
+              "showType": "string",
+              "eps": "number"
+            }
+        },{...}
+      ]
+    ],
+    "seasons": [
+      {
+        "id":string,
+        "data_number": number,
+        "data_id": number,
+        "season": string,
+        "title": string,
+        "japanese_title": string,
+        "season_poster": string
+      },
+      {...}
+    ],
+
+  }
+}
+```
+
+### `GET` Categories info
+
+```bash
+  GET /api/<category>
+```
+
+### Endpoint
+
+```bash
+  /api/{string}?page={number}
+  #or
+  /api/{string}
+```
+
+#### Parameters
+
+| Parameter  | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :--------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+| `category` |     `path`     | `string`  | `Category`  |   Yes âœ”ï¸    |   --    |
+|   `page`   |    `query`     | `number`  | `Page-no.`  |    No âŒ    |   `1`   |
+
+#### List of Categories
+
+- top-airing
+- most-popular
+- most-favorite
+- completed
+- recently-updated
+- recently-added
+- top-upcoming
+- subbed-anime
+- dubbed-anime
+- top-upcoming
+- genre/action
+- genre/adventure
+- genre/cars
+- genre/comedy
+- genre/dementia
+- genre/demons
+- genre/drama
+- genre/ecchi
+- genre/fantasy
+- genre/game
+- genre/harem
+- genre/historical
+- genre/horror
+- genre/isekai
+- genre/josei
+- genre/kids
+- genre/magic
+- genre/martial-arts
+- genre/mecha
+- genre/military
+- genre/music
+- genre/mystery
+- genre/parody
+- genre/police
+- genre/psychological
+- genre/romance
+- genre/samurai
+- genre/school
+- genre/sci-fi
+- genre/seinen
+- genre/shoujo
+- genre/shoujo-ai
+- genre/shounen
+- genre/shounen-ai
+- genre/slice-of-life
+- genre/space
+- genre/sports
+- genre/super-power
+- genre/supernatural
+- genre/thriller
+- genre/vampire
+- az-list
+- az-list/other
+- az-list/0-9
+- az-list/a
+- az-list/b
+- az-list/c
+- az-list/d
+- az-list/e
+- az-list/f
+- az-list/g
+- az-list/h
+- az-list/i
+- az-list/j
+- az-list/k
+- az-list/l
+- az-list/m
+- az-list/n
+- az-list/o
+- az-list/p
+- az-list/q
+- az-list/r
+- az-list/s
+- az-list/t
+- az-list/u
+- az-list/v
+- az-list/w
+- az-list/x
+- az-list/y
+- az-list/z
+- movie
+- special
+- ova
+- ona
+- tv
+- music
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/most-popular?page=1");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "totalPages": number,
+    "data": [
+      {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": string,
+          "duration": string,
+          "sub": number,
+          "dub": number
+        },
+        "adultContent":boolean,
+      },
+      {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": sting,
+          "duration": string,
+          "sub": number,
+          "dub": number,
+          "eps": number
+        },
+        "adultContent":boolean,
+      },
+      {...}
+    ],
+    "totalPages":number
+  }
+}
+```
+
+### `GET` Search result's info
+
+```bash
+  GET /api/search
+```
+
+### Endpoint
+
+```bash
+  /api/search?keyword={string}
+```
+
+#### Parameters
+
+| Parameter | Parameter-Type |   Type   | Description | Mandatory ? | Default |
+| :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
+| `keyword` |    `query`     | `string` |  `keyword`  |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/search?keyword=one%20punch%20man");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "tvInfo": [Object]
+      },
+    {
+        "id":string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "tvInfo": [Object]
+      },
+    {...}
+  ]
+}
+```
+
+### `GET` Search suggestions
+
+```bash
+  GET /api/search/suggest
+```
+
+### Endpoint
+
+```bash
+  /api/search/suggest?keyword={string}
+```
+
+#### Parameters
+
+| Parameter | Parameter-Type |   Type   | Description | Mandatory ? | Default |
+| :-------: | :------------: | :------: | :---------: | :---------: | :-----: |
+| `keyword` |    `query`     | `string` |  `keyword`  |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/search/suggest?keyword=demon");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+        "id":"string",
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "releaseDate": string,
+        "showType": string,
+        "duration": string,
+      },
+    {
+        "id":"string",
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "releaseDate": string,
+        "showType": string,
+        "duration": string,
+      },
+    {...}
+  ]
+}
+```
+
+### `GET` Filter Anime
+
+```bash
+GET /api/filter
+```
+
+#### Endpoint
+
+```bash
+/api/filter
+```
+
+#### Parameters
+
+| Parameter  | Parameter-Type | Data-Type | Description                                                  | Mandatory ? |   Default   |
+| :--------: | :------------: | :-------: | :----------------------------------------------------------- | :---------: | :---------: |
+|   `type`   |    `query`     |  string   | Type of anime (e.g., `movie`, `tv`, etc.)                    |    No âŒ    |    `ALL`    |
+|  `status`  |    `query`     |  string   | Status of anime (e.g., `finished`, `currently_airing`, etc.) |    No âŒ    |    `ALL`    |
+|  `rated`   |    `query`     |  string   | Rating of anime (e.g., `G`, `PG`, etc.)                      |    No âŒ    |    `ALL`    |
+|  `score`   |    `query`     |  string   | Score rating (e.g., `1` to `10`)                             |    No âŒ    |    `ALL`    |
+|  `season`  |    `query`     |  string   | Season of anime (e.g., `spring`, `summer`, etc.)             |    No âŒ    |    `ALL`    |
+| `language` |    `query`     |  string   | Language of anime (e.g., `sub`, `dub`)                       |    No âŒ    |    `ALL`    |
+|  `genres`  |    `query`     |  string   | Comma-separated list of genres (e.g., `action, comedy`)      |    No âŒ    |    `ALL`    |
+|   `sort`   |    `query`     |  string   | Sorting method (e.g., `default`, `score`, etc.)              |    No âŒ    |  `DEFAULT`  |
+|   `page`   |    `query`     |  number   | Page number for pagination                                   |    No âŒ    |     `1`     |
+|    `sy`    |    `query`     |  number   | Start year                                                   |    No âŒ    | `undefined` |
+|    `sm`    |    `query`     |  number   | Start month                                                  |    No âŒ    | `undefined` |
+|    `sd`    |    `query`     |  number   | Start day                                                    |    No âŒ    | `undefined` |
+|    `ey`    |    `query`     |  number   | End year                                                     |    No âŒ    | `undefined` |
+|    `em`    |    `query`     |  number   | End month                                                    |    No âŒ    | `undefined` |
+|    `ed`    |    `query`     |  number   | End day                                                      |    No âŒ    | `undefined` |
+| `keyword`  |    `query`     |  string   | Search keyword                                               |    No âŒ    | `undefined` |
+
+#### Example of Request
+
+```javascript
+import axios from "axios";
+
+const params = {
+  type: "2", // TV
+  status: "1", // Finished
+  rated: "5", // R+
+  sort: "default",
+  page: 1,
+};
+
+const resp = await axios.get("/api/filter", { params });
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "totalPages": number,
+    "data": [
+      {
+        "id": string,
+        "data_id": number,
+        "poster": string,
+        "title": string,
+        "japanese_title": string,
+        "description": string,
+        "tvInfo": {
+          "showType": string,
+          "duration": string,
+          "sub": number,
+          "dub": number
+        },
+        "adultContent": boolean
+      },
+      {...}
+    ]
+  }
+}
+```
+
+### `GET` Anime's episode list
+
+```bash
+  GET /api/episodes/
+```
+
+### Endpoint
+
+```bash
+  /api/episodes/{param}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `param`     |  string   |  anime-id   |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/episodes/one-piece-100");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    "totalEpisodes":number,
+    "episodes":[
+    { "episode_no": number,
+      "id": string,
+      "data_id": number,
+      "jname": string,
+      "title": string,
+      "japanese_title": string
+    },
+    {...}
+    ]
+  ]
+}
+```
+
+### `GET` Schedule of upcoming anime
+
+```bash
+  GET /api/schedule
+```
+
+### Endpoint
+
+```bash
+  /api/schedule?date={string}
+```
+
+#### Parameters
+
+| Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+|  `date`   |     query      |  string   |    date     |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/schedule?date=2024-09-23");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "id":string,
+      "data_id":number,
+      "title":string,
+      "japanese_title":string,
+      "releaseDate":string,
+      "time":string,
+      "episode_no":number
+    },
+    {...}
+  ]
+}
+```
+
+### `GET` Schedule of next episode of Anime
+
+```bash
+  GET /api/schedule/
+```
+
+### Endpoint
+
+```bash
+  /api/schedule/:id
+```
+
+#### Parameters
+
+| Parameter | Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :-------: | :------------: | :-------: | :---------: | :---------: | :-----: |
+|   `id`    |     param      |  string   |  anime-id   |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get("/api/schedule/one-piece-100");
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success":true,
+  "results":
+  {
+    "nextEpisodeSchedule":"2025-02-08 16:30:00"
+  }
+}
+```
+
+### `GET` Streaming info
+
+```bash
+  GET /api/stream
+```
+
+### Endpoint
+
+```bash
+  /api/stream?id={string}&server={string}&type={string}
+```
+
+#### Parameters
+
+|        Parameters        | Parameter-Type |   Type   | Mandatory ? | Default |
+| :----------------------: | :------------: | :------: | :---------: | :-----: |
+| `id` , `server` , `type` |    `query`     | `string` |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "/api/stream?id=frieren-beyond-journeys-end-18542?ep=107257&server=hd-1&type=sub"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "streamingLink": [
+      {
+            "id":number,
+            "type": "sub",
+            "link": {
+              "file":string,
+              "type":string,
+            },
+            "tracks": [
+              {
+                "file": string,
+                "label": string,
+                "kind": string,
+                "default": boolean
+              },{...}
+            ],
+            "intro": [Object],
+            "outro": [Object],
+            "server":string
+      }
+    ],
+    "servers": [
+      {
+        "type":string,
+        "data_id": number,
+        "server_id": number,
+        "server_name": string
+      },
+      {...}
+    ]
+  }
+}
+
+
+```
+### `GET` Fallback Streaming info
+
+```bash
+  GET /api/stream/fallback
+```
+
+### Endpoint
+
+```bash
+  /api/stream/fallback?id={string}&server={string}&type={string}
+```
+
+#### Parameters
+
+|        Parameters        | Parameter-Type |   Type    | Mandatory ? | Default |
+| :----------------------: | :------------: | :------:  | :---------: | :-----: |
+| `id` , `server` , `type` |    `query`     | `string`  |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "/api/stream/fallback?id=frieren-beyond-journeys-end-18542?ep=107257&server=hd-1&type=sub"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": {
+    "streamingLink": [
+      {
+            "id":number,
+            "type": "sub",
+            "link": {
+              "file":string,
+              "type":string,
+            },
+            "tracks": [
+              {
+                "file": string,
+                "label": string,
+                "kind": string,
+                "default": boolean
+              },{...}
+            ],
+            "intro": [Object],
+            "outro": [Object],
+            "server":string
+      }
+    ],
+    "servers": [
+      {
+        "type":string,
+        "data_id": number,
+        "server_id": number,
+        "server_name": string
+      },
+      {...}
+    ]
+  }
+}
+```
+
+### `GET` Available servers of anime
+
+```bash
+  GET /api/servers/
+```
+
+### Endpoint
+
+```bash
+  /api/servers/{id}
+```
+
+#### Parameters
+
+| Parameter-Type | Data-Type | Description | Mandatory ? | Default |
+| :------------: | :-------: | :---------: | :---------: | :-----: |
+|    `params`    | `string`  |  `keyword`  |   Yes âœ”ï¸    |   --    |
+
+#### Example of request
+
+```javascript
+import axios from "axios";
+const resp = await axios.get(
+  "/api/servers/demon-slayer-kimetsu-no-yaiba-hashira-training-arc-19107?ep=124260"
+);
+console.log(resp.data);
+```
+
+#### Sample Response
+
+```javascript
+{
+  "success": true,
+  "results": [
+    {
+      "type": string,
+      "data_id": number,
+      "server_id": number,
+      "serverName": string
+    },
+    {...},
+  ]
+}
+```
+
+> ### Pull Requests
+
+- Pull requests are welcomed that address bug fixes, improvements, or new features.
+- Fork the repository and create a new branch for your changes.
+- Ensure your code follows our coding standards.
+- Include tests if applicable.
+- Describe your changes clearly in the pull request, explaining the problem and solution.
+
+> ### Reporting Issues
+
+If you discover any issues or have suggestions for improvement, please open an issue. Provide a clear and concise description of the problem, steps to reproduce it, and any relevant information about your environment.
+
+> ### Support
+>
+> If you like the project feel free to drop a star âœ¨. Your appreciation means a lot.
+
+<p align="center" style="text-decoration: none;">Made by <a href="https://github.com/arceus-am3" tarGET="_blank">JustAnime 
+</a>ðŸ«°</p>
